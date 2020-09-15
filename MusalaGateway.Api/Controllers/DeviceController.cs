@@ -19,6 +19,7 @@ namespace MusalaGateway.Api.Controllers
 {
     [Route("api/gateways/{gatewayId}/devices")]
     [ApiController]
+    [Produces("application/json")]
     public class DeviceController : ControllerBase
     {
         private readonly IDeviceService _deviceService;
@@ -33,7 +34,6 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpGet]
-        [Produces("application/json")]
         public async Task<ActionResult<IEnumerable<DeviceDto>>> GetDevicesForGateway(Guid gatewayId)
         {
             if (!_gatewayService.GatewayExists(gatewayId))
@@ -45,7 +45,6 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpGet("{deviceId}", Name = "GetDeviceForGateway")]
-        [Produces("application/json")]
         public async Task<ActionResult<DeviceDto>> GetDeviceForGateway(Guid gatewayId, int deviceId)
         {
             if (!_gatewayService.GatewayExists(gatewayId))
@@ -61,7 +60,6 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpPost]
-        [Produces("application/json")]
         public async Task<ActionResult<DeviceDto>> CreateDeviceForGateway(Guid gatewayId, DeviceForCreationDto device)
         {
             if (!_gatewayService.GatewayExists(gatewayId))
@@ -77,14 +75,13 @@ namespace MusalaGateway.Api.Controllers
                     new { gatewayId, deviceId = deviceToReturn.Id },
                     deviceToReturn);
             }
-            catch(ValidationException e)
+            catch (ValidationException e)
             {
                 return Problem(e.Message, null, StatusCodes.Status422UnprocessableEntity);
             }
         }
 
         [HttpDelete("{deviceId}")]
-        [Produces("application/json")]
         public async Task<ActionResult> DeleteDeviceForGateway(Guid gatewayId, int deviceId)
         {
             if (!_gatewayService.GatewayExists(gatewayId))
@@ -101,7 +98,6 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpPatch("{deviceId}")]
-        [Produces("application/json")]
         public async Task<ActionResult<DeviceDto>> PartiallyUpdateGateway(Guid gatewayId, int deviceId, JsonPatchDocument<DeviceForUpdateDto> patchDocument)
         {
             if (!_gatewayService.GatewayExists(gatewayId))

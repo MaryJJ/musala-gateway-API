@@ -11,7 +11,7 @@ Basic Actions:
 * Set device status (offline, online)
 * Edit information of the devices.
 
-This project is a REST API and works independently of the visual client, we recommended using the visual interface you will find [here]https://github.com/MaryJJ/musala-gateway-WebApp
+This project is a REST API and works independently of the visual client, we recommended using the visual interface you will find [here](https://github.com/MaryJJ/musala-gateway-WebApp)
 
 ## Software Requirements
 
@@ -19,13 +19,14 @@ This project is a REST API and works independently of the visual client, we reco
 * Framework: ASP.NET Core 3.1
 * Database: in-memory
 * Automated build: Docker 
-* UI: [Angular]https://github.com/MaryJJ/musala-gateway-WebApp
+* UI: [Angular](https://github.com/MaryJJ/musala-gateway-WebApp)
 
 ## Project structure
 
 ```
 MusalaGateway.Api/           point of access for application
-MusalaGateway.Core/          application's foundation, hold contracts (interfaces …), models and everything else that is essential
+MusalaGateway.Core/          application's foundation, hold contracts (interfaces …), 
+                             models and everything else that is essential
 MusalaGateway.Data/          access layer
 MusalaGateway.Services/      business logic
 MusalaGateway.Test/          unit testing
@@ -40,9 +41,9 @@ dotnet test -v n
 dotnet publish -c Release -o /publish 
 dotnet /publish/MusalaGateway.Api.dll
 ```
-* Api: [https://localhost:5001/api]
+* Api: https://localhost:5001/api
 * Swagger documentation:
-[https://localhost:5001/explorer]
+https://localhost:5001/explorer
 
 Or publish with Docker:
 
@@ -50,9 +51,9 @@ Or publish with Docker:
 docker build -t musalagateway . 
 docker run -d -p 8080:80 --name MusalaGateway.Api musalagateway
 ```
-* Api: [http://localhost:8080/api]
+* Api: http://localhost:8080/api
 * Swagger documentation:
-[http://localhost:8080/explorer]
+http://localhost:8080/explorer
 
 ### Initial Configuration
 
@@ -77,6 +78,7 @@ The environment variable HEROKU_API_KEY was set in Github Secret.
 
 Demo online:
 
-- WebApp: https://musalagateway.web.app
+- WebApp: https://musalagateway.web.app 
+(the online demo when loading for the first time may take a while to show the data since the Api is hosted in a free dino in Heroku and this dino sleeps if it has no activity, so the first load needs to reactivate the dino of the Api.)
 - Api: https://musala-gateway-api.herokuapp.com/api
 - Swagger documentation: https://musala-gateway-api.herokuapp.com/explorer

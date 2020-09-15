@@ -39,7 +39,8 @@ namespace MusalaGateway.Api
                 setupAction =>
                 {
                     setupAction.ReturnHttpNotAcceptable = true;
-                }).AddNewtonsoftJson(setupAction =>
+                })
+                .AddNewtonsoftJson(setupAction =>
                 {
                     setupAction.SerializerSettings.ContractResolver =
                        new CamelCasePropertyNamesContractResolver();
@@ -135,7 +136,6 @@ namespace MusalaGateway.Api
             }
             else
             {
-                app.UseHttpsRedirection();
                 app.UseExceptionHandler(appBuilder =>
                 {
                     appBuilder.Run(async context =>
