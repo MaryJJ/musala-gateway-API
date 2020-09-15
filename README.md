@@ -41,9 +41,9 @@ dotnet test -v n
 dotnet publish -c Release -o /publish 
 dotnet /publish/MusalaGateway.Api.dll
 ```
-* Api: https://localhost:5001/api
+* Api: http://localhost:5000/api
 * Swagger documentation:
-https://localhost:5001/explorer
+http://localhost:5000/explorer
 
 Or publish with Docker:
 
