@@ -76,9 +76,9 @@ The environment variable HEROKU_API_KEY was set in Github Secret.
 
 ## Links
 
-Demo online:
+Demos online:
 
-- WebApp: https://musalagateway.web.app 
+- WebApp: https://musalagateway.web.app <br/> 
 (the online demo when loading for the first time may take a while to show the data since the Api is hosted in a free dino in Heroku and this dino sleeps if it has no activity, so the first load needs to reactivate the dino of the Api.)
 - Api: https://musala-gateway-api.herokuapp.com/api
 - Swagger documentation: https://musala-gateway-api.herokuapp.com/explorer
