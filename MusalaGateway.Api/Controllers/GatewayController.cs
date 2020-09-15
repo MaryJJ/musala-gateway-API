@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,7 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MusalaGateway.Api.Resources;
 using MusalaGateway.Core.Models;
+using MusalaGateway.Core.ResourceParameters;
 using MusalaGateway.Core.Services;
+using Newtonsoft.Json;
 
 namespace MusalaGateway.Api.Controllers
 {
@@ -31,9 +34,18 @@ namespace MusalaGateway.Api.Controllers
 
         [HttpGet()]
         [HttpHead]
-        public async Task<ActionResult<IEnumerable<GatewayDto>>> GetGateways()
+        [Produces("application/json")]
+        public async Task<ActionResult<IEnumerable<GatewayDto>>> GetGateways([FromQuery] GatewayResourceParameters gatewayResourceParameters)
         {
-            IEnumerable<Gateway> gateways = await _gatewayService.GetGatewaysAsync();
+            PageList<Gateway> gateways = await _gatewayService.GetGatewaysAsync(gatewayResourceParameters);
+            var paginationMetadata = new
+            {
+                totalCount = gateways.TotalCount,
+                pageSize = gateways.PageSize,
+                currentPage = gateways.CurrentPage,
+                totalPages = gateways.TotalPages
+            };
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(paginationMetadata));
             return Ok(_mapper.Map<IEnumerable<GatewayDto>>(gateways));
         }
 
@@ -49,18 +61,27 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpPost()]
+        [Produces("application/json")]
         public async Task<ActionResult<GatewayDto>> CreateGateway(GatewayForCreationDto gateway)
         {
             Gateway newGateway = _mapper.Map<Gateway>(gateway);
-            await _gatewayService.AddGatewayAsync(newGateway);
+            try
+            {
+                await _gatewayService.AddGatewayAsync(newGateway);
 
-            var gatewayToReturn = _mapper.Map<GatewayDto>(newGateway);
-            return CreatedAtRoute("GetGateway",
-                new { gatewayId = gatewayToReturn.Id },
-                gatewayToReturn);
+                var gatewayToReturn = _mapper.Map<GatewayDto>(newGateway);
+                return CreatedAtRoute("GetGateway",
+                    new { gatewayId = gatewayToReturn.Id },
+                    gatewayToReturn);
+            }
+            catch(ValidationException e)
+            {
+                return Problem(e.Message, null, StatusCodes.Status422UnprocessableEntity);
+            }
         }
 
         [HttpDelete("{gatewayId}")]
+        [Produces("application/json")]
         public async Task<ActionResult> DeleteGateway(Guid gatewayId)
         {
             Gateway gateway = await _gatewayService.GetGatewayAsync(gatewayId);
@@ -73,6 +94,7 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpPatch("{gatewayId}")]
+        [Produces("application/json")]
         public async Task<ActionResult<GatewayDto>> PartiallyUpdateGateway(Guid gatewayId, JsonPatchDocument<GatewayForUpdateDto> patchDocument)
         {
             Gateway gateway = await _gatewayService.GetGatewayAsync(gatewayId);

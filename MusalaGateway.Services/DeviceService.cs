@@ -3,6 +3,7 @@ using MusalaGateway.Core.Repositories;
 using MusalaGateway.Core.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,10 @@ namespace MusalaGateway.Services
 
         public async Task AddDeviceAsync(Guid gatewayId, Device device)
         {
+            if(_uow.Gateways.GetDevicesCount(gatewayId) >= 10)
+            {
+                throw new ValidationException("No more than 10 devices are allowed for a Gateway");
+            }
             if (device == null)
             {
                 throw new ArgumentNullException(nameof(device));

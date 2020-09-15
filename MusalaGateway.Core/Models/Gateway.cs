@@ -17,9 +17,6 @@ namespace MusalaGateway.Core.Models
         [MaxLength(15)]
         public string IpV4 { get; set; }
 
-        //[NotMapped]
-        //public int DevicesCount { get; set; }
-
         public ICollection<Device> Devices { get; set; }
             = new List<Device>();
     }

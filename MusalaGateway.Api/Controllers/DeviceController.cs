@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -32,6 +33,7 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpGet]
+        [Produces("application/json")]
         public async Task<ActionResult<IEnumerable<DeviceDto>>> GetDevicesForGateway(Guid gatewayId)
         {
             if (!_gatewayService.GatewayExists(gatewayId))
@@ -43,6 +45,7 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpGet("{deviceId}", Name = "GetDeviceForGateway")]
+        [Produces("application/json")]
         public async Task<ActionResult<DeviceDto>> GetDeviceForGateway(Guid gatewayId, int deviceId)
         {
             if (!_gatewayService.GatewayExists(gatewayId))
@@ -58,25 +61,30 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpPost]
+        [Produces("application/json")]
         public async Task<ActionResult<DeviceDto>> CreateDeviceForGateway(Guid gatewayId, DeviceForCreationDto device)
         {
             if (!_gatewayService.GatewayExists(gatewayId))
             {
                 return NotFound();
             }
-            if (_gatewayService.GetDevicesCount(gatewayId) >= 10)
+            try
             {
-                return Problem("No more that 10 peripheral devices are allowed for a gateway.", null, StatusCodes.Status422UnprocessableEntity);
+                Device newDevice = _mapper.Map<Device>(device);
+                await _deviceService.AddDeviceAsync(gatewayId, newDevice);
+                var deviceToReturn = _mapper.Map<DeviceDto>(newDevice);
+                return CreatedAtRoute("GetDeviceForGateway",
+                    new { gatewayId, deviceId = deviceToReturn.Id },
+                    deviceToReturn);
             }
-            Device newDevice = _mapper.Map<Device>(device);
-            await _deviceService.AddDeviceAsync(gatewayId, newDevice);
-            var deviceToReturn = _mapper.Map<DeviceDto>(newDevice);
-            return CreatedAtRoute("GetDeviceForGateway",
-                new { gatewayId, deviceId = deviceToReturn.Id },
-                deviceToReturn);
+            catch(ValidationException e)
+            {
+                return Problem(e.Message, null, StatusCodes.Status422UnprocessableEntity);
+            }
         }
 
         [HttpDelete("{deviceId}")]
+        [Produces("application/json")]
         public async Task<ActionResult> DeleteDeviceForGateway(Guid gatewayId, int deviceId)
         {
             if (!_gatewayService.GatewayExists(gatewayId))
@@ -93,6 +101,7 @@ namespace MusalaGateway.Api.Controllers
         }
 
         [HttpPatch("{deviceId}")]
+        [Produces("application/json")]
         public async Task<ActionResult<DeviceDto>> PartiallyUpdateGateway(Guid gatewayId, int deviceId, JsonPatchDocument<DeviceForUpdateDto> patchDocument)
         {
             if (!_gatewayService.GatewayExists(gatewayId))

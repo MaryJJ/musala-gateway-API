@@ -126,13 +126,16 @@ namespace MusalaGateway.Api
             app.UseCors(builder => builder
            .AllowAnyOrigin()
            .AllowAnyMethod()
-           .AllowAnyHeader());
+           .AllowAnyHeader()
+           .WithExposedHeaders(new string[] { "X-Pagination" }));
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
+                app.UseHttpsRedirection();
                 app.UseExceptionHandler(appBuilder =>
                 {
                     appBuilder.Run(async context =>
@@ -142,8 +145,6 @@ namespace MusalaGateway.Api
                     });
                 });
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -160,6 +161,14 @@ namespace MusalaGateway.Api
                 c.RoutePrefix = "explorer";
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Musala Gateway V1");
             });
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                using (var context = scope.ServiceProvider.GetService<MusalaGatewayDbContext>())
+                {
+                    context.Database.EnsureCreated();
+                }
+            }
         }
     }
 }

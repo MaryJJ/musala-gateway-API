@@ -1,20 +1,82 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+![Logo of the project](https://github.com/MaryJJ/musala-gateway-WebApp/raw/master/logo.png)
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	dotnet ef --startup-project MusalaGateway.Api/MusalaGateway.Api.csproj database update
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+"Surround yourself with successful people. You can't be what you can't see."
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+# Musala Gateway
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+Musala Gateway is a project to manage the company's gateways as well as the devices that connect through them. Allowing us to keep control over Gateway IP and device identifiers, the system allows us to access information through a REST API.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+Basic Actions: 
+* List the company's active Gateways, edit their information, and the associated devices. 
+* Set device status (offline, online)
+* Edit information of the devices.
+
+This project is a REST API and works independently of the visual client, we recommended using the visual interface you will find [here]https://github.com/MaryJJ/musala-gateway-WebApp
+
+## Software Requirements
+
+* Programming languages: C#
+* Framework: ASP.NET Core 3.1
+* Database: in-memory
+* Automated build: Docker 
+* UI: [Angular]https://github.com/MaryJJ/musala-gateway-WebApp
+
+## Project structure
+
+```
+MusalaGateway.Api/           point of access for application
+MusalaGateway.Core/          application's foundation, hold contracts (interfaces …), models and everything else that is essential
+MusalaGateway.Data/          access layer
+MusalaGateway.Services/      business logic
+MusalaGateway.Test/          unit testing
+```
+
+## Installing / Getting started
+
+Open command prompt in project folder and execute the follow commands:
+
+```shell
+dotnet test -v n
+dotnet publish -c Release -o /publish 
+dotnet /publish/MusalaGateway.Api.dll
+```
+* Api: [https://localhost:5001/api]
+* Swagger documentation:
+[https://localhost:5001/explorer]
+
+Or publish with Docker:
+
+```shell
+docker build -t musalagateway . 
+docker run -d -p 8080:80 --name MusalaGateway.Api musalagateway
+```
+* Api: [http://localhost:8080/api]
+* Swagger documentation:
+[http://localhost:8080/explorer]
+
+### Initial Configuration
+
+The database is automatically seed with test data.
+
+## Developing
+
+```shell
+git clone https://github.com/MaryJJ/musala-gateway-API.git
+```
+
+### Deploying / Publishing
+
+Automatic deploy to heroku with docker and Github Actions:
+
+```shell
+.github/workflows/heroku.yml
+```
+The environment variable HEROKU_API_KEY was set in Github Secret.
+
+## Links
+
+Demo online:
+
+- WebApp: https://musalagateway.web.app
+- Api: https://musala-gateway-api.herokuapp.com/api
+- Swagger documentation: https://musala-gateway-api.herokuapp.com/explorer

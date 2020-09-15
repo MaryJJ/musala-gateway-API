@@ -6,19 +6,17 @@ COPY MusalaGateway.Api/*.csproj MusalaGateway.Api/
 COPY MusalaGateway.Core/*.csproj MusalaGateway.Core/
 COPY MusalaGateway.Data/*.csproj MusalaGateway.Data/
 COPY MusalaGateway.Services/*.csproj MusalaGateway.Services/
+COPY MusalaGateway.Tests/*.csproj MusalaGateway.Tests/
 
 RUN dotnet restore
 COPY . .
 
-# build
+# testing
+FROM build AS testing
 WORKDIR /src/MusalaGateway.Api
 RUN dotnet build
-WORKDIR /src/MusalaGateway.Core
-RUN dotnet build
-WORKDIR /src/MusalaGateway.Data
-RUN dotnet build
-WORKDIR /src/MusalaGateway.Services
-RUN dotnet build
+WORKDIR /src/MusalaGateway.Tests
+RUN dotnet test -v n
 
 # publish
 FROM build AS publish

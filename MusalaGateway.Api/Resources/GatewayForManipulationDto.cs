@@ -9,7 +9,6 @@ namespace MusalaGateway.Api.Resources
 {
     [IpMustBeValidIpV4(
       ErrorMessage = "The IP address must be a valid IPV4 address.")]
-    [NoMore10DevicesAllowed(ErrorMessage = "No more that 10 peripheral devices are allowed for a gateway.")]
     public abstract class GatewayForManipulationDto
     {
         [MaxLength(100, ErrorMessage = "The name shouldn't have more than 100 characters.")]

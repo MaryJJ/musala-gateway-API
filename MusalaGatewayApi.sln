@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusalaGateway.Api", "MusalaGateway.Api\MusalaGateway.Api.csproj", "{98FBEBD8-42B7-4453-8233-65A4C0EEE7E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusalaGateway.Api", "MusalaGateway.Api\MusalaGateway.Api.csproj", "{98FBEBD8-42B7-4453-8233-65A4C0EEE7E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusalaGateway.Core", "MusalaGateway.Core\MusalaGateway.Core.csproj", "{479CFF9D-4DD0-41DF-A912-7139ABBD23C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusalaGateway.Core", "MusalaGateway.Core\MusalaGateway.Core.csproj", "{479CFF9D-4DD0-41DF-A912-7139ABBD23C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusalaGateway.Data", "MusalaGateway.Data\MusalaGateway.Data.csproj", "{8BB4DC03-214A-4B0D-A9B7-AF28D218DD6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusalaGateway.Data", "MusalaGateway.Data\MusalaGateway.Data.csproj", "{8BB4DC03-214A-4B0D-A9B7-AF28D218DD6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusalaGateway.Services", "MusalaGateway.Services\MusalaGateway.Services.csproj", "{36848D4F-59C4-4680-ACD7-411F14565ADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusalaGateway.Services", "MusalaGateway.Services\MusalaGateway.Services.csproj", "{36848D4F-59C4-4680-ACD7-411F14565ADB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusalaGateway.Tests", "MusalaGateway.Tests\MusalaGateway.Tests.csproj", "{70941C7D-1DDA-4EAD-AC45-46AD4324762C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{98FBEBD8-42B7-4453-8233-65A4C0EEE7E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -72,5 +71,23 @@ Global
 		{36848D4F-59C4-4680-ACD7-411F14565ADB}.Release|x64.Build.0 = Release|Any CPU
 		{36848D4F-59C4-4680-ACD7-411F14565ADB}.Release|x86.ActiveCfg = Release|Any CPU
 		{36848D4F-59C4-4680-ACD7-411F14565ADB}.Release|x86.Build.0 = Release|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Debug|x64.Build.0 = Debug|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Debug|x86.Build.0 = Debug|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Release|x64.ActiveCfg = Release|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Release|x64.Build.0 = Release|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Release|x86.ActiveCfg = Release|Any CPU
+		{70941C7D-1DDA-4EAD-AC45-46AD4324762C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACAA7228-19B0-4CBA-88FE-F35A6C49FC80}
 	EndGlobalSection
 EndGlobal

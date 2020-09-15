@@ -1,8 +1,10 @@
 using MusalaGateway.Core.Models;
 using MusalaGateway.Core.Repositories;
+using MusalaGateway.Core.ResourceParameters;
 using MusalaGateway.Core.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +24,10 @@ namespace MusalaGateway.Services
             if (gateway == null)
             {
                 throw new ArgumentNullException(nameof(gateway));
+            }
+            if(gateway.Devices.Count > 10)
+            {
+                throw new ValidationException("No more than 10 devices are allowed for a gateway.");
             }
             gateway.Id = Guid.NewGuid();
             await _uow.Gateways.AddAsync(gateway);
@@ -65,6 +71,11 @@ namespace MusalaGateway.Services
         public async Task<IEnumerable<Gateway>> GetGatewaysAsync()
         {
             return await _uow.Gateways.GetAllIncludeAsync(g => g.Devices);
+        }
+
+        public async Task<PageList<Gateway>> GetGatewaysAsync(GatewayResourceParameters gatewayResourceParameters)
+        {
+            return await _uow.Gateways.GetGatewaysAsync(gatewayResourceParameters);
         }
 
         public async Task UpdateGatewayAsync()
